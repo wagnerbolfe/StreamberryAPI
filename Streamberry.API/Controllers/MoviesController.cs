@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Streamberry.API.Entities;
 using Streamberry.API.Services;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.Json;
 
 namespace Streamberry.API.Controllers
 {
@@ -25,9 +28,115 @@ namespace Streamberry.API.Controllers
         {
             if (pageSize > maxMoviesPageSize) pageSize = maxMoviesPageSize;
 
-            var movies = await _movieRepository.GetMoviesAsync(title, search, pageNumber, pageSize);
+            var (movies, paginationMetadata) = await _movieRepository.GetMoviesAsync(title, search, pageNumber, pageSize);
 
-            return Ok(movies);
+            Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(paginationMetadata));
+
+            var moviesGrouped = movies
+                .Select((value, index) => new
+                {
+                    movie = new
+                    {
+                        value.Id,
+                        value.Title,
+                        value.Genre,
+                        value.ReleaseDate,
+                        value.Streamings,
+                        value.Ratings
+                    }
+                })
+                .GroupBy(x => x.movie.Genre)
+                .ToDictionary(wrap => wrap.Key);
+
+            return Ok(moviesGrouped);
+        }
+
+        [HttpGet("streamings")]
+        public async Task<IActionResult> GetStreamingsByMovie([FromQuery] string title)
+        {
+            var movies = await _movieRepository.GetStreamingsByMovie(title);
+
+            var moviesGrouped = movies
+                .Select((value, index) => new
+                {
+                    movie = new
+                    {
+                        value.Id,
+                        value.Title,
+                        value.Genre,
+                        StreamingsCount = value.Streamings.Count,
+                    }
+                })
+                .GroupBy(x => x.movie.Genre)
+                .ToDictionary(wrap => wrap.Key);
+
+            return Ok(moviesGrouped);
+        }
+
+        [HttpGet("ratingaverage")]
+        public async Task<IActionResult> GetRatingAverageByMovie([FromQuery] string title)
+        {
+            var movies = await _movieRepository.GetStreamingsByMovie(title);
+
+            var moviesGrouped = movies
+                .Select((value, index) => new
+                {
+                    movie = new
+                    {
+                        value.Id,
+                        value.Title,
+                        value.Genre,
+                        Average = value.Ratings.Select(x => x.Rating).Average()
+        }
+                })
+                .GroupBy(x => x.movie.Genre)
+                .ToDictionary(wrap => wrap.Key);
+
+            return Ok(moviesGrouped);
+        }
+
+        [HttpGet("moviesinyear")]
+        public async Task<IActionResult> GetMoviesByYear([FromQuery] string year)
+        {
+            var movies = await _movieRepository.GetMoviesByYear(year);
+
+            var moviesGrouped = movies
+                .Select((value, index) => new
+                {
+                    movie = new
+                    {
+                        value.Id,
+                        value.Title,
+                        value.Genre,
+                        value.ReleaseDate,
+                    }
+                })
+                .GroupBy(x => x.movie.ReleaseDate)
+                .ToDictionary(wrap => wrap.Key);
+
+            return Ok(moviesGrouped);
+        }
+
+        [HttpGet("moviesbyrating")]
+        public async Task<IActionResult> GetMoviesByRating([FromQuery] int rating)
+        {
+            var movies = await _movieRepository.GetMoviesByRating();
+
+            var moviesGrouped = movies
+                .Select((value, index) => new
+                {
+                    movie = new
+                    {
+                        value.Id,
+                        value.Title,
+                        value.Genre,
+                        value.ReleaseDate,
+                        Rating = value.Ratings.Where(x => x.Rating == rating)
+                    }
+                })
+                .GroupBy(x => x.movie.Rating);
+
+            return Ok(moviesGrouped);
         }
 
         [HttpGet("{id}", Name = "GetMovie")]

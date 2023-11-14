@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http.Connections;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Streamberry.API.Data;
 using Streamberry.API.Entities;
 
@@ -24,7 +23,8 @@ namespace Streamberry.API.Services
             return movies;
         }
 
-        public async Task<IEnumerable<Movie>> GetMoviesAsync(string title, string search, int pageNumber, int pageSize)
+        public async Task<(IEnumerable<Movie>, PaginationMetadata)> GetMoviesAsync(
+            string title, string search, int pageNumber, int pageSize)
         {
             var collection = _context.Movies
                 .Include(x => x.Streamings)
@@ -44,10 +44,63 @@ namespace Streamberry.API.Services
                     || (a.Genre != null && a.Genre.Contains(search)));
             }
 
-            return await collection.OrderBy(c => c.Genre)
+            var totalItemCount = await collection.CountAsync();
+
+            var paginationMetadata = new PaginationMetadata(
+                totalItemCount, pageSize, pageNumber);
+
+            var collectionToReturn = await collection.OrderBy(c => c.Title)
                 .Skip(pageSize * (pageNumber - 1))
                 .Take(pageSize)
                 .ToListAsync();
+            
+            return (collectionToReturn, paginationMetadata);
+        }
+
+        public async Task<IEnumerable<Movie>> GetStreamingsByMovie(string title)
+        {
+            var collection = _context.Movies
+                .Include(x => x.Streamings)
+                .Include(x => x.Ratings) as IQueryable<Movie>;
+
+            if (!string.IsNullOrWhiteSpace(title))
+            {
+                title = title.Trim();
+                collection = collection
+                    .Where(a => a.Title.Contains(title));
+            }
+
+            var collectionToReturn = await collection.ToListAsync();
+
+            return (collectionToReturn);
+        }
+
+        public async Task<IEnumerable<Movie>> GetMoviesByYear(string year)
+        {
+            var collection = _context.Movies
+                .Include(x => x.Streamings)
+                .Include(x => x.Ratings) as IQueryable<Movie>;
+
+            if (!string.IsNullOrWhiteSpace(year))
+            {
+                year = year.Trim();
+                collection = collection.Where(a => a.ReleaseDate.TrimEnd('/').Contains(year));
+            }
+
+            var collectionToReturn = await collection.ToListAsync();
+
+            return (collectionToReturn);
+        }
+
+        public async Task<IEnumerable<Movie>> GetMoviesByRating()
+        {
+            var collection = _context.Movies
+                .Include(x => x.Streamings)
+                .Include(x => x.Ratings) as IQueryable<Movie>;
+
+            var collectionToReturn = await collection.ToListAsync();
+
+            return (collectionToReturn);
         }
 
         public async Task<Movie> GetMovieAsync(int id)

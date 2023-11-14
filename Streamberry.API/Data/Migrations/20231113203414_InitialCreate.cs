@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -19,7 +18,7 @@ namespace Streamberry.API.Data.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Title = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
                     Genre = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
-                    ReleaseDate = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    ReleaseDate = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -68,9 +67,9 @@ namespace Streamberry.API.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Movies_Id",
+                name: "IX_Movies_Title",
                 table: "Movies",
-                column: "Id",
+                column: "Title",
                 unique: true);
 
             migrationBuilder.CreateIndex(

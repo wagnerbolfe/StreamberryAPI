@@ -15,7 +15,7 @@ namespace Streamberry.API.Entities
         public string Genre { get; set; }
 
         [Required]
-        public DateTime ReleaseDate { get; set; }
+        public string ReleaseDate { get; set; }
 
         public List<Streaming> Streamings { get; set; } 
         public List<UserRating> Ratings { get; set; }

@@ -25,7 +25,7 @@ namespace Streamberry.API.Data
                         new() { Rating = 1, Comment = "Não Gostei Muito!"},
                         new() { Rating = 5, Comment = "Muito Bom!"}
                     },
-                    ReleaseDate = DateTime.Now.AddMonths(-200)
+                    ReleaseDate = "07/2003"
         },
                 new Movie
                 {
@@ -42,7 +42,7 @@ namespace Streamberry.API.Data
                         new() { Rating = 2, Comment = "Não Gostei Muito!"},
                         new() { Rating = 5, Comment = "Muito Bom!"}
                     },
-                    ReleaseDate = DateTime.Now.AddMonths(-160)
+                    ReleaseDate = "07/2006"
                 },
                 new Movie
                 {
@@ -59,13 +59,13 @@ namespace Streamberry.API.Data
                         new() { Rating = 2, Comment = "Não Gostei Muito!"},
                         new() { Rating = 4, Comment = "Muito Bom!"}
                     },
-                    ReleaseDate = DateTime.Now.AddMonths(-100)
+                    ReleaseDate = "05/2007"
                 },
                 new Movie
                 {
                     Title = "Piratas do Caribe - Navegando em Aguas Misteriosas",
                     Genre = "Action",
-                    ReleaseDate = DateTime.Now.AddMonths(-75),
+                    ReleaseDate = "05/2011",
                     Streamings = new List<Streaming>
                     {
                         new() { StreamingName = "Hulu" },
@@ -76,7 +76,7 @@ namespace Streamberry.API.Data
                 {
                     Title = "Piratas do Caribe - A Vingança de Salazar",
                     Genre = "Action",
-                    ReleaseDate = DateTime.Now.AddMonths(-50),
+                    ReleaseDate = "05/2017",
                     Streamings = new List<Streaming>
                     {
                         new() { StreamingName = "Netflix" },
