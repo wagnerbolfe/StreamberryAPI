@@ -1,0 +1,321 @@
+{
+	"info": {
+		"_postman_id": "e9ae4cff-1ca7-4ffa-a655-7873ff674961",
+		"name": "Desafio Keyworks",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15431807"
+	},
+	"item": [
+		{
+			"name": "Get Movies",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/movies",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"movies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Movies (Paged)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/movies?pageSize=5&pageNumber=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"movies"
+					],
+					"query": [
+						{
+							"key": "pageSize",
+							"value": "5"
+						},
+						{
+							"key": "pageNumber",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Movies (Filter)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/movies?title=Piratas do Caribe - O Baú da Morte",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"movies"
+					],
+					"query": [
+						{
+							"key": "title",
+							"value": "Piratas do Caribe - O Baú da Morte"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Streamings By Movie",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/movies/streamings?title=Mundo",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"movies",
+						"streamings"
+					],
+					"query": [
+						{
+							"key": "title",
+							"value": "Mundo"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Rating Average by Movie",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/movies/ratingaverage?title=Mundo",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"movies",
+						"ratingaverage"
+					],
+					"query": [
+						{
+							"key": "title",
+							"value": "Mundo"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Movies in Year",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/movies/moviesinyear?year=2011",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"movies",
+						"moviesinyear"
+					],
+					"query": [
+						{
+							"key": "year",
+							"value": "2011"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Movies By Rating",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/movies/moviesbyrating?rating=5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"movies",
+						"moviesbyrating"
+					],
+					"query": [
+						{
+							"key": "rating",
+							"value": "5"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Movies (Search)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/movies?search=Mundo",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"movies"
+					],
+					"query": [
+						{
+							"key": "search",
+							"value": "Mundo"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Movie",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/movies/7",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"movies",
+						"7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteMovie",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/movies/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"movies",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Movie",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Title\": \"File de Teste\",\r\n    \"ReleaseDate\": \"12/2011\",\r\n    \"Genre\": \"Suspense\",\r\n    \"Streamings\": [\r\n        {\r\n            \"StreamingName\": \"Netflix\"\r\n        }\r\n    ],\r\n    \"Ratings\": [\r\n        {\r\n            \"Rating\": 1,\r\n            \"Comment\": \"Muito horrível\"\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/movies",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"movies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Movie",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Title\": \"File de Teste 1\",\r\n    \"ReleaseDate\": \"11/2020\",\r\n    \"Genre\": \"Suspense69\",\r\n    \"Streamings\": [\r\n        {\r\n            \"StreamingName\": \"Netflixxx\"\r\n        }\r\n    ],\r\n    \"Ratings\": [\r\n        {\r\n            \"Rating\": 3,\r\n            \"Comment\": \"Muito horrível de bom\"\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/movies/7",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"movies",
+						"7"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

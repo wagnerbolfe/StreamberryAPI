@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Streamberry.API.Entities;
 using Streamberry.API.Services;
 using System.Collections.Generic;
@@ -152,6 +153,12 @@ namespace Streamberry.API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateMovie([FromBody]Movie movie)
         {
+            var movieResult = await _movieRepository.GetMoviesAsync();
+
+            var movieCheck = movieResult.Any(c => c.Title == movie.Title);
+
+            if (movieCheck) return BadRequest("O título do filme já existe");
+
             _movieRepository.CreateMovie(movie);
 
             await _movieRepository.SaveChangesAsync();
